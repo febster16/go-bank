@@ -27,4 +27,7 @@ sqlc:
 test:
 	go test -v -cover ./...
 
-.PHONY: postgres createdb dropdb
+start-app:
+	go run main.go
+
+.PHONY: postgres createdb dropdb upgradedb downgradedb sqlc test start-app
