@@ -30,4 +30,10 @@ test:
 start-app:
 	go run main.go
 
+mockdb:
+	mockgen -package mockdb -destination database/mock/store.go github.com/febster16/go-bank/database/sqlc Store
+
+clean-test-cache:
+	go clean -testcache
+
 .PHONY: postgres createdb dropdb upgradedb downgradedb sqlc test start-app
