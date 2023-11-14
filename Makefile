@@ -12,11 +12,18 @@ createdb:
 dropdb:
 	docker exec -it postgres dropdb go_bank
 
+# migrate create -ext sql -dir database/migration -seq add_users
 upgradedb:
 	migrate -path database/migration -database postgresql://root:postgres@localhost:5431/go_bank?sslmode=disable -verbose up
 
+upgradedb1:
+	migrate -path database/migration -database postgresql://root:postgres@localhost:5431/go_bank?sslmode=disable -verbose up 1
+
 downgradedb:
 	migrate -path database/migration -database postgresql://root:postgres@localhost:5431/go_bank?sslmode=disable -verbose down
+
+downgradedb1:
+	migrate -path database/migration -database postgresql://root:postgres@localhost:5431/go_bank?sslmode=disable -verbose down 1
 
 generatesqlc:
 	docker run --rm -v "%cd%:/src" -w /src sqlc/sqlc generate
@@ -36,4 +43,4 @@ mockdb:
 clean-test-cache:
 	go clean -testcache
 
-.PHONY: postgres createdb dropdb upgradedb downgradedb sqlc test start-app
+.PHONY: postgres createdb dropdb upgradedb downgradedb sqlc test start-app upgradedb1 downgradedb1
